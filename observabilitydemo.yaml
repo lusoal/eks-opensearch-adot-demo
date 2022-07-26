@@ -1,0 +1,51 @@
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks-observablity-cluster
+  region: us-east-2
+  version: "1.22"
+
+iam:
+  withOIDC: true
+
+vpc:
+  cidr: 10.15.0.0/16
+  nat:
+    gateway: HighlyAvailable
+  # disable public access to endpoint and only allow private access
+  clusterEndpoints:
+    publicAccess: true
+    privateAccess: true
+
+availabilityZones: ["us-east-2a", "us-east-2b", "us-east-2c"]
+
+managedNodeGroups:
+- name: application-nodes
+  labels: { role: apps }
+  desiredCapacity: 3
+  instanceType: t3.medium
+  ssh:
+    enableSsm: true
+
+- name: infra-nodes
+  labels: { role: infra }
+  instanceType: m5.xlarge
+  desiredCapacity: 5
+  volumeSize: 100
+  privateNetworking: true
+
+addons:
+- name: vpc-cni # no version is specified so it deploys the default version
+  attachPolicyARNs:
+    - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+- name: coredns
+  version: latest # auto discovers the latest available
+- name: kube-proxy
+  version: latest
+
+# To enable all of the control plane logs, uncomment below:
+cloudWatch:
+ clusterLogging:
+   enableTypes: ["*"]

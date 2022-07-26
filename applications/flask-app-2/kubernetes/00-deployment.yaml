@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: observability-app-2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: observability-app-2
+  name: observability-app-2
+  namespace: observability-app-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: observability-app-2
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: observability-app-2
+    spec:
+      containers:
+      - image: 936068047509.dkr.ecr.us-east-1.amazonaws.com/observability-app-2:2
+        name: observability-app-2
+        ports:
+        - containerPort: 5000
+        env:
+          # - name: AWS_XRAY_DAEMON_ADDRESS
+          #   value: observability-collector.aws-otel-eks:2000
+          - name: OTEL_EXPORTER
+            value: otlp
+          - name: OTEL_EXPORTER_OTLP_ENDPOINT
+            value: http://observability-collector.aws-otel-eks.svc.cluster.local:55680
+          - name: OTEL_SERVICE_NAME
+            value: observability-app-2
+          - name: OTEL_RESOURCE_ATTRIBUTES
+            value: "service.name=observability-app-2"
+          - name: OTEL_METRICS_EXPORTER
+            value: ""
+        resources: {}
