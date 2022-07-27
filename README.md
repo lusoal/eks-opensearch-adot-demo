@@ -226,3 +226,15 @@ sed -i -e "s@__FLASK_APP_2_URI__@${FLASK_APP_2_URI}@g" kubernetes/00-deployment.
 
 kubectl apply -f kubernetes/
 ```
+
+# Deploying Fluent-bit for logging
+
+Fluent Bit is an open source and multi-platform Log Processor and Forwarder which allows you to collect data/logs from different sources, unify and send them to multiple destinations. It’s fully compatible with Docker and Kubernetes environments.
+
+Let's deploy fluentbit
+
+> **Go back to the root of the demonstration folder**
+
+```bash
+kubectl apply -f add-ons/fluent-bit
+```
