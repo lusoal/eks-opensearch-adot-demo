@@ -19,7 +19,7 @@ endpoints = ("service_1", "error")
 
 @app.route("/service_1")
 def first_route():
-    r = requests.get('http://observability-app.observability-app.svc.cluster.local/one')
+    r = requests.get('http://flask-app-1.flask-app-1.svc.cluster.local/one')
     response = str(r.text)
     return jsonify({"message":response})
 
