@@ -39,4 +39,6 @@ spec:
             value: "service.name=flask-app-1"
           - name: OTEL_METRICS_EXPORTER
             value: ""
+          - name: OTEL_PYTHON_LOG_CORRELATION
+            value: "true"
         resources: {}
