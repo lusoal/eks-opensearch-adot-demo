@@ -362,7 +362,7 @@ spec:
       # This exporter is used to send metrics to a workspace in Amazon Managed Prometheus
       #
       awsprometheusremotewrite:
-        endpoint: "https://aps-workspaces.us-east-2.amazonaws.com/workspaces/ws-af1e7407-0e22-4738-ab2f-76806bd6e19b/api/v1/remote_write"
+        endpoint: "https://aps-workspaces.__AWS_REGION__.amazonaws.com/workspaces/__WORKSPACE_ID__/api/v1/remote_write"
         aws_auth:
           region: "us-east-2"
           service: "aps"

@@ -146,13 +146,13 @@ Now that we have all the components up and running its time to create the OpenTe
 Getting Amazon Managed Prometheus `remote write` URL.
 
 ```bash
-TBD
+export WORKSPACE_ID=$(aws amp list-workspaces | jq '.workspaces' | jq '.[].workspaceId' | tr -d '"')
 ```
 
 Change the URL inside the pipeline manifest.
 
 ```bash
-TBD
+sed "s/__WORKSPACE_ID__/${WORKSPACE_ID}/g" adot-collector/04-open-telemetry-pipeline.yaml
 ```
 
 Apply the pipeline manifest:
