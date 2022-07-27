@@ -7,17 +7,26 @@ This demonstration has the focus of provision Amazon EKS, Amazon Managed Prometh
 - Provision EKS Cluster with Managed NodeGroups X
 - Setup ADOT Operator as Managed add-on in the cluster X
 - Install metric-server, node-exporter and kube-state-metrics X
-- Install OpenSearch using Helm
-- Provision Amazon Managed Prometheus
-- Provision Amazon Managed Grafana
-- Setup Data Prepper in order to integrate with OpenSearch
-- Create Open Telemetry Pipeline
+- Install OpenSearch using Helm X
+- Provision Amazon Managed Prometheus X
+- Provision Amazon Managed Grafana X
+- Setup Data Prepper in order to integrate with OpenSearch X
+- Create Open Telemetry Pipeline X
 - Deploy the sample applications inside the cluster
+- Deploy fluentbit and send it to OpenSearch
 - Check OpenSearch Dashboard
+
+## Export Useful Variables
+
+```bash
+export AWS_DEFAULT_REGION="YOUR AWS REGION"
+```
 
 ## Provision EKS Cluster
 
 ```bash
+sed -i -e "s/__AWS_REGION__/${AWS_DEFAULT_REGION}/g" ./observabilitydemo.yaml
+
 eksctl create cluster -f observabilitydemo.yaml
 ```
 
@@ -26,7 +35,7 @@ Now wait about 15 minutes in order to have your cluster up and running.
 Update your `kubeconfig`
 
 ```bash
-aws eks update-kubeconfig --name eks-observablity-cluster --region us-east-2
+aws eks update-kubeconfig --name eks-observablity-cluster --region ${AWS_DEFAULT_REGION}
 ```
 
 ## Setup ADOT Collector as Managed Add-On
@@ -131,6 +140,8 @@ aws amp create-workspace --alias eks-observability-demo --region us-east-2
 
 ## Provision Managed Grafana
 
+To learn how to provision Amazon Managed Grafana Service follow this [link](https://www.eksworkshop.com/intermediate/246_monitoring_amp_amg/create_amg_workspace/)
+
 ## Provision Data-Prepper
 
 Data Prepper is a component of the OpenSearch project that accepts, filters, transforms, enriches, and routes data at scale.
@@ -152,7 +163,9 @@ export WORKSPACE_ID=$(aws amp list-workspaces | jq '.workspaces' | jq '.[].works
 Change the URL inside the pipeline manifest.
 
 ```bash
-sed "s/__WORKSPACE_ID__/${WORKSPACE_ID}/g" adot-collector/04-open-telemetry-pipeline.yaml
+sed -i -e "s/__WORKSPACE_ID__/${WORKSPACE_ID}/g" adot-collector/04-open-telemetry-pipeline.yaml
+
+sed -i -e "s/__AWS_REGION__/${AWS_DEFAULT_REGION}/g" adot-collector/04-open-telemetry-pipeline.yaml
 ```
 
 Apply the pipeline manifest:

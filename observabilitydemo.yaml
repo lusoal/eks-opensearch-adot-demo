@@ -4,7 +4,7 @@ kind: ClusterConfig
 
 metadata:
   name: eks-observablity-cluster
-  region: us-east-2
+  region: __AWS_REGION__
   version: "1.22"
 
 iam:
