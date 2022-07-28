@@ -83,15 +83,17 @@ data:
 
   output-data-prepper.conf: |
     [OUTPUT]
-        Name  http
+        Name  es
         Match *
-        Host  data-prepper.data-prepper.svc.cluster.local
-        Port  2021
-        tls Off
+        Host  my-cluster.monitoring.svc.cluster.local
+        Port  9200
+        HTTP_User admin
+        HTTP_Passwd admin
+        Trace_Error On
+        Replace_Dots On
+        tls On
         tls.verify Off
-        Format json
-        URI /log/ingest
-
+        
   parsers.conf: |
     [PARSER]
         Name   apache
