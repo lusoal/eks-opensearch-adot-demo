@@ -2,12 +2,15 @@ import time
 import random
 import requests
 import logging
+import sys
 
 from flask import Flask, jsonify, make_response
 from prometheus_flask_exporter import PrometheusMetrics
 # from aws_xray_sdk.core import xray_recorder
 # from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
+cli = sys.modules['flask.cli']
+cli.show_server_banner = lambda *x: None
 
 app = Flask(__name__)
 PrometheusMetrics(app)

@@ -12,9 +12,15 @@ This demonstration has the focus of provision Amazon EKS, Amazon Managed Prometh
 - Provision Amazon Managed Grafana X
 - Setup Data Prepper in order to integrate with OpenSearch X
 - Create Open Telemetry Pipeline X
-- Deploy the sample applications inside the cluster
-- Deploy fluentbit and send it to OpenSearch
-- Check OpenSearch Dashboard
+- Deploy the sample applications inside the cluster X
+- Deploy fluentbit and send it to OpenSearch X
+- Check OpenSearch Dashboard X
+
+# Architetcure
+
+<p align="center"> 
+<img src="static/EKS-OpenSearch-Observability.jpg">
+</p>
 
 # Export Useful Variables
 

@@ -7,19 +7,19 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: flask-app-1
+    k8s-app: flask-app-1
   name: flask-app-1
   namespace: flask-app-1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: flask-app-1
+      k8s-app: flask-app-1
   strategy: {}
   template:
     metadata:
       labels:
-        app: flask-app-1
+        k8s-app: flask-app-1
     spec:
       containers:
       - image: __FLASK_APP_1_URI__

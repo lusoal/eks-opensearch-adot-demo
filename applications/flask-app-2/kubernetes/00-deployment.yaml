@@ -1,29 +1,29 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: flask-second
+  name: flask-app-2
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: flask-second
-  name: flask-second
-  namespace: flask-second
+    k8s-app: flask-app-2
+  name: flask-app-2
+  namespace: flask-app-2
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: flask-second
+      k8s-app: flask-app-2
   strategy: {}
   template:
     metadata:
       labels:
-        app: flask-second
+        k8s-app: flask-app-2
     spec:
       containers:
-      - image: 936068047509.dkr.ecr.us-east-2.amazonaws.com/flask-app-2:2
-        name: flask-second
+      - image: __FLASK_APP_2_URI__
+        name: flask-app-2
         ports:
         - containerPort: 5000
         env:
@@ -34,9 +34,9 @@ spec:
           - name: OTEL_EXPORTER_OTLP_ENDPOINT
             value: http://observability-collector.monitoring.svc.cluster.local:55680
           - name: OTEL_SERVICE_NAME
-            value: flask-second
+            value: flask-app-2
           - name: OTEL_RESOURCE_ATTRIBUTES
-            value: "service.name=flask-second"
+            value: "service.name=flask-app-2"
           - name: OTEL_METRICS_EXPORTER
             value: ""
           - name: OTEL_PYTHON_LOG_CORRELATION
